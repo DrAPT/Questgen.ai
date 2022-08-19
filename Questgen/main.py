@@ -35,6 +35,9 @@ import time
 class QGen:
     
     def __init__(self,nl_thresh):
+        """
+        QGen with nl threshold
+        """
         
         self.nl_thresh = nl_thresh
         self.tokenizer = T5Tokenizer.from_pretrained('t5-base')
