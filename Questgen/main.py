@@ -37,7 +37,7 @@ def test_function():
 
 class QGen:
     
-    def __init__(self,nl_thresh):
+    def __init__(self,nl_thresh,seed):
         """
         QGen with nl threshold
         """
@@ -56,7 +56,7 @@ class QGen:
 
         self.fdist = FreqDist(brown.words())
         self.normalized_levenshtein = NormalizedLevenshtein()
-        self.set_seed(42)
+        self.set_seed(seed)
         
     def set_seed(self,seed):
         numpy.random.seed(seed)
