@@ -32,6 +32,9 @@ from Questgen.mcq.mcq import generate_questions_mcq
 from Questgen.mcq.mcq import generate_normal_questions
 import time
 
+def test_function():
+    print('this is the fork!')
+
 class QGen:
     
     def __init__(self,nl_thresh):
