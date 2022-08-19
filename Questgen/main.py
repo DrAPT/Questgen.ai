@@ -34,9 +34,9 @@ import time
 
 class QGen:
     
-    def __init__(self):
+    def __init__(self,nl_thresh):
         
-        
+        self.nl_thresh = nl_thresh
         self.tokenizer = T5Tokenizer.from_pretrained('t5-base')
         model = T5ForConditionalGeneration.from_pretrained('Parth/result')
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -71,7 +71,7 @@ class QGen:
         modified_text = joiner.join(sentences)
 
 
-        keywords = get_keywords(self.nlp,modified_text,inp['max_questions'],self.s2v,self.fdist,self.normalized_levenshtein,len(sentences),nl_thresh)
+        keywords = get_keywords(self.nlp,modified_text,inp['max_questions'],self.s2v,self.fdist,self.normalized_levenshtein,len(sentences),self.nl_thresh)
 
 
         keyword_sentence_mapping = get_sentences_for_keyword(keywords, sentences)
