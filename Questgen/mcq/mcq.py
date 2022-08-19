@@ -82,6 +82,8 @@ def get_options(answer,s2v):
             return distractors,"sense2vec"
     except:
         print (" Sense2vec_distractors failed for word : ",answer)
+        # AT added
+        return [], ""
 
 
     return distractors,"None"
@@ -206,7 +208,7 @@ def get_keywords(nlp,text,max_keywords,s2v,fdist,normalized_levenshtein,no_of_se
 
     answers = []
     for answer in total_phrases_filtered:
-        if answer not in answers and MCQs_available(answer,s2v):
+        if answer not in answers:# and MCQs_available(answer,s2v):
             answers.append(answer)
 
     answers = answers[:max_keywords]
@@ -250,13 +252,15 @@ def generate_questions_mcq(keyword_sent_mapping,device,tokenizer,model,sense2vec
         individual_question["options"], individual_question["options_algorithm"] = get_options(val, sense2vec)
 
         individual_question["options"] =  filter_phrases(individual_question["options"], 10,normalized_levenshtein,nl_thresh)
+        # AT switched off
         index = 3
         individual_question["extra_options"]= individual_question["options"][index:]
         individual_question["options"] = individual_question["options"][:index]
         individual_question["context"] = keyword_sent_mapping[val]
-     
-        if len(individual_question["options"])>0:
-            output_array["questions"].append(individual_question)
+        
+        # AT switched off
+        #if len(individual_question["options"])>0:
+        output_array["questions"].append(individual_question)
 
     return output_array
 
