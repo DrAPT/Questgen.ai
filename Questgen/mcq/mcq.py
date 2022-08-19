@@ -215,7 +215,7 @@ def get_keywords(nlp,text,max_keywords,s2v,fdist,normalized_levenshtein,nl_thres
     return answers
 
 
-def generate_questions_mcq(keyword_sent_mapping,device,tokenizer,model,sense2vec,normalized_levenshtein):
+def generate_questions_mcq(keyword_sent_mapping,device,tokenizer,model,sense2vec,normalized_levenshtein,nl_thresh):
     batch_text = []
     answers = keyword_sent_mapping.keys()
     for answer in answers:
@@ -242,7 +242,7 @@ def generate_questions_mcq(keyword_sent_mapping,device,tokenizer,model,sense2vec
         individual_question ={}
         out = outs[index, :]
         dec = tokenizer.decode(out, skip_special_tokens=True, clean_up_tokenization_spaces=True)
-
+    
         Question = dec.replace("question:", "")
         Question = Question.strip()
         individual_question["question_statement"] = Question

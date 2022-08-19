@@ -31,6 +31,7 @@ from Questgen.mcq.mcq import get_sentences_for_keyword
 from Questgen.mcq.mcq import generate_questions_mcq
 from Questgen.mcq.mcq import generate_normal_questions
 import time
+from IPython.core.debugger import Pdb
 
 def test_function():
     print('this is the fork!')
@@ -93,7 +94,7 @@ class QGen:
             return final_output
         else:
             try:
-                generated_questions = generate_questions_mcq(keyword_sentence_mapping,self.device,self.tokenizer,self.model,self.s2v,self.normalized_levenshtein)
+                generated_questions = generate_questions_mcq(keyword_sentence_mapping,self.device,self.tokenizer,self.model,self.s2v,self.normalized_levenshtein,self.nl_thresh)
 
             except:
                 return final_output
