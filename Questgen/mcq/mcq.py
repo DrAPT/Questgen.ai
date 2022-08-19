@@ -131,12 +131,12 @@ def is_far(words_list,currentword,thresh,normalized_levenshtein):
     else:
         return False
 
-def filter_phrases(phrase_keys,max,normalized_levenshtein ):
+def filter_phrases(phrase_keys,max,normalized_levenshtein,nl_thresh=0.3):
     filtered_phrases =[]
     if len(phrase_keys)>0:
         filtered_phrases.append(phrase_keys[0])
         for ph in phrase_keys[1:]:
-            if is_far(filtered_phrases,ph,0.7,normalized_levenshtein ):
+            if is_far(filtered_phrases,ph,nl_thresh,normalized_levenshtein ):
                 filtered_phrases.append(ph)
             if len(filtered_phrases)>=max:
                 break
@@ -188,20 +188,20 @@ def get_phrases(doc):
 
 
 
-def get_keywords(nlp,text,max_keywords,s2v,fdist,normalized_levenshtein,no_of_sentences):
+def get_keywords(nlp,text,max_keywords,s2v,fdist,normalized_levenshtein,no_of_sentences,nl_thresh):
     doc = nlp(text)
     max_keywords = int(max_keywords)
 
     keywords = get_nouns_multipartite(text)
     keywords = sorted(keywords, key=lambda x: fdist[x])
-    keywords = filter_phrases(keywords, max_keywords,normalized_levenshtein )
+    keywords = filter_phrases(keywords, max_keywords,normalized_levenshtein,nl_thresh)
 
     phrase_keys = get_phrases(doc)
-    filtered_phrases = filter_phrases(phrase_keys, max_keywords,normalized_levenshtein )
+    filtered_phrases = filter_phrases(phrase_keys, max_keywords,normalized_levenshtein,nl_thresh)
 
     total_phrases = keywords + filtered_phrases
 
-    total_phrases_filtered = filter_phrases(total_phrases, min(max_keywords, 2*no_of_sentences),normalized_levenshtein )
+    total_phrases_filtered = filter_phrases(total_phrases, min(max_keywords, 2*no_of_sentences),normalized_levenshtein,nl_thresh)
 
 
     answers = []
@@ -249,7 +249,7 @@ def generate_questions_mcq(keyword_sent_mapping,device,tokenizer,model,sense2vec
         individual_question["id"] = index+1
         individual_question["options"], individual_question["options_algorithm"] = get_options(val, sense2vec)
 
-        individual_question["options"] =  filter_phrases(individual_question["options"], 10,normalized_levenshtein)
+        individual_question["options"] =  filter_phrases(individual_question["options"], 10,normalized_levenshtein,nl_thresh)
         index = 3
         individual_question["extra_options"]= individual_question["options"][index:]
         individual_question["options"] = individual_question["options"][:index]
