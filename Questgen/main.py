@@ -56,7 +56,7 @@ class QGen:
 
         self.fdist = FreqDist(brown.words())
         self.normalized_levenshtein = NormalizedLevenshtein()
-        self.set_seed(seed)
+        self.set_seed(seed) # default is 42
         
     def set_seed(self,seed):
         numpy.random.seed(seed)
