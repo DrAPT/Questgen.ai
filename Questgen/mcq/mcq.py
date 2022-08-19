@@ -23,6 +23,7 @@ from nltk.corpus import brown
 from similarity.normalized_levenshtein import NormalizedLevenshtein
 from nltk.tokenize import sent_tokenize
 from flashtext import KeywordProcessor
+from IPython.core.debugger import Pdb
 
 def MCQs_available(word,s2v):
     word = word.replace(" ", "_")
@@ -190,7 +191,7 @@ def get_phrases(doc):
 
 
 
-def get_keywords(nlp,text,max_keywords,s2v,fdist,normalized_levenshtein,no_of_sentences,nl_thresh):
+def get_keywords(nlp,text,max_keywords,s2v,fdist,normalized_levenshtein,nl_thresh):
     doc = nlp(text)
     max_keywords = int(max_keywords)
 
@@ -204,8 +205,7 @@ def get_keywords(nlp,text,max_keywords,s2v,fdist,normalized_levenshtein,no_of_se
     total_phrases = keywords + filtered_phrases
 
     total_phrases_filtered = filter_phrases(total_phrases, max_keywords, normalized_levenshtein, nl_thresh)
-
-
+    
     answers = []
     for answer in total_phrases_filtered:
         if answer not in answers:# and MCQs_available(answer,s2v):
