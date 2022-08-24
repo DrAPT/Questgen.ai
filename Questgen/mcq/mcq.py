@@ -83,11 +83,8 @@ def get_options(answer,s2v):
             return distractors,"sense2vec"
     except:
         print (" Sense2vec_distractors failed for word : ",answer)
-        # AT added
-        return [], ""
 
-
-    return distractors,"None"
+    return distractors, ""
 
 def tokenize_sentences(text):
     sentences = [sent_tokenize(text)]
