@@ -183,7 +183,8 @@ def get_phrases(doc):
 
     phrase_keys=list(phrases.keys())
     phrase_keys = sorted(phrase_keys, key= lambda x: len(x),reverse=True)
-    phrase_keys=phrase_keys[:50]
+    # AT turned off filter
+    #phrase_keys=phrase_keys[:50]
     return phrase_keys
 
 
